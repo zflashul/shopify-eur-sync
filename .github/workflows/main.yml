@@ -1,0 +1,26 @@
+name: Actualizare Curs EUR Shopify
+on:
+  schedule:
+    - cron: '0 6 * * *' # Rulează automat în fiecare dimineață
+  workflow_dispatch:   # Acesta îți activează butonul de "Run workflow" manual
+
+jobs:
+  run-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout cod
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Instalare dependente
+        run: npm install
+
+      - name: Executare script
+        env:
+          SHOPIFY_SHOP: ${{ secrets.SHOPIFY_SHOP }}
+          SHOPIFY_TOKEN: ${{ secrets.SHOPIFY_TOKEN }}
+        run: node index.js
