@@ -1,12 +1,15 @@
 import fetch from "node-fetch";
 
-// Definim variabilele la nivel global în interiorul scriptului
-const SHOP = process.env.SHOPIFY_SHOP;
+// Curățăm automat variabila în caz de erori de scriere
+const RAW_SHOP = process.env.SHOPIFY_SHOP || "";
+const SHOP = RAW_SHOP.replace(/^https?:\/\//, '').replace(/\/$/, '').trim();
 const TOKEN = process.env.SHOPIFY_TOKEN;
 
 async function updateShopifyRate() {
+  // Verificăm dacă variabila a fost curățată corect
+  console.log(`Debug: Încercăm conexiunea la: https://${SHOP}/admin/api/2024-01/graphql.json`);
+  
   try {
-    // Verificăm dacă variabilele sunt încărcate corect din Secrets
     if (!SHOP || !TOKEN) {
       throw new Error("Variabilele SHOPIFY_SHOP sau SHOPIFY_TOKEN lipsesc din GitHub Secrets.");
     }
