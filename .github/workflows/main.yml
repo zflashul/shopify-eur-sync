@@ -16,9 +16,6 @@ jobs:
         with:
           node-version: 20
 
-      - name: Instalare dependente
-        run: npm install
-
       - name: Executare script
         env:
           SHOPIFY_SHOP: ${{ secrets.SHOPIFY_SHOP }}
