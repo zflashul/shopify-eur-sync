@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 // Configurare din variabilele de mediu GitHub
 const SHOP = process.env.SHOPIFY_SHOP;
@@ -28,7 +28,7 @@ async function getShopId() {
                 },
             }
         );
-        return response.data.data.shop.id;
+        return response.data?.data?.shop?.id;
     } catch (error) {
         console.error("Eroare la preluarea ID-ului magazinului:", error.message);
         return null;
@@ -89,8 +89,8 @@ async function updateShopifyRate() {
             }
         );
 
-        const data = response.data.data.metafieldsSet;
-        if (data.userErrors.length > 0) {
+        const data = response.data?.data?.metafieldsSet;
+        if (data?.userErrors?.length > 0) {
             console.error("Erori la salvarea metafield-ului:", data.userErrors);
             process.exit(1);
         } else {
